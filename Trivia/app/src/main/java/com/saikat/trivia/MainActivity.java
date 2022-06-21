@@ -21,6 +21,7 @@ import com.saikat.trivia.data.AnswerAsyncResponse;
 import com.saikat.trivia.data.Repository;
 import com.saikat.trivia.databinding.ActivityMainBinding;
 import com.saikat.trivia.model.Question;
+import com.saikat.trivia.model.Score;
 
 import org.json.JSONArray;
 
@@ -32,12 +33,15 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private int currentQuestionIndex = 0;
     List<Question> questionList;
+    private int scoreCounter = 0;
+    private Score score;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        score = new Score();
 
         questionList = new Repository().getQuestions(questionArrayList -> {
                     binding.questionTextview.setText(questionArrayList.get(currentQuestionIndex).getAnswer());
@@ -68,7 +72,9 @@ public class MainActivity extends AppCompatActivity {
         if (userChoseCorrect == answer) {
             snackMessageId = R.string.correct_answer;
             fadeAnimation();
+            addPoints();
         } else {
+            deductPoints();
             snackMessageId = R.string.incorrect;
             shakeAnimation();
         }
@@ -130,5 +136,19 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+    }
+    private void deductPoints(){
+
+        if(scoreCounter > 0){
+            scoreCounter -= 100;
+            score.setScore(scoreCounter);
+            binding.scoreText.setText(String.valueOf(score.getScore()));
+        }
+
+    }
+    private void addPoints() {
+        scoreCounter += 100;
+        score.setScore(scoreCounter);
+        binding.scoreText.setText(String.valueOf(score.getScore()));
     }
 }
