@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Trivia</string>
+    <string name="out_of_text">Question: 45/90</string>
+    <string name="true_button">True</string>
+    <string name="false_button">False</string>
+    <string name="next_button">Next</string>
+    <string name="correct_answer">Correct!</string>
+    <string name="incorrect">Incorrect</string>
+    <string name="placeholder">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</string>
+</resources>
