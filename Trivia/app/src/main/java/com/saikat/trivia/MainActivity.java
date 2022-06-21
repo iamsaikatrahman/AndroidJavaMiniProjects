@@ -142,13 +142,13 @@ public class MainActivity extends AppCompatActivity {
         if(scoreCounter > 0){
             scoreCounter -= 100;
             score.setScore(scoreCounter);
-            binding.scoreText.setText(String.valueOf(score.getScore()));
+            binding.scoreText.setText("Current Score: "+String.valueOf(score.getScore()));
         }
 
     }
     private void addPoints() {
         scoreCounter += 100;
         score.setScore(scoreCounter);
-        binding.scoreText.setText(String.valueOf(score.getScore()));
+        binding.scoreText.setText("Current Score: "+String.valueOf(score.getScore()));
     }
 }
