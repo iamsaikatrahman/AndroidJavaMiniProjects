@@ -22,6 +22,7 @@ import com.saikat.trivia.data.Repository;
 import com.saikat.trivia.databinding.ActivityMainBinding;
 import com.saikat.trivia.model.Question;
 import com.saikat.trivia.model.Score;
+import com.saikat.trivia.util.Prefs;
 
 import org.json.JSONArray;
 
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     List<Question> questionList;
     private int scoreCounter = 0;
     private Score score;
+    private Prefs prefs;
 
 
     @Override
@@ -42,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         score = new Score();
-
+        prefs = new Prefs(MainActivity.this);
         questionList = new Repository().getQuestions(questionArrayList -> {
                     binding.questionTextview.setText(questionArrayList.get(currentQuestionIndex).getAnswer());
                     updateCounter(questionArrayList);
@@ -52,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
         binding.buttonNext.setOnClickListener(view -> {
             currentQuestionIndex = (currentQuestionIndex + 1) % questionList.size();
             updateQuestion();
+            prefs.saveHighestScore(scoreCounter);
+            Log.d("Prefs", "onCreate: "+prefs.getHighestScore());
 
         });
         binding.buttonTrue.setOnClickListener(view -> {
