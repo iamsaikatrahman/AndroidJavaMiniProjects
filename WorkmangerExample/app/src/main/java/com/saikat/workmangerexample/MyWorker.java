@@ -19,10 +19,10 @@ public class MyWorker extends Worker {
     @NonNull
     @Override
     public Result doWork() {
-//        Data retrievedData = getInputData();
-//        String desc = retrievedData.getString("input data");
+        Data retrievedData = getInputData();
+        String desc = retrievedData.getString("input data");
         displayNotification("Demo Task", "This is demo task");
-//        Data outputData = new Data.Builder().putString("output_data", "This is output data").build();
+        Data outputData = new Data.Builder().putString("output_data", "This is output data").build();
         return Result.success();
     }
 
