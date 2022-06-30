@@ -26,6 +26,7 @@ import com.saikat.trivia.util.Prefs;
 
 import org.json.JSONArray;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,9 +43,18 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         score = new Score();
         prefs = new Prefs(MainActivity.this);
+        // Retrieve the last state
+        currentQuestionIndex = prefs.getState();
+
+        Log.d("TAG", "onCreate: "+prefs.getHighestScore());
+
+        binding.heighestScoreText.setText("Highest Score: "+String.valueOf(prefs.getHighestScore()));
+        binding.scoreText.setText("Current Score: "+String.valueOf(score.getScore()));
+
         questionList = new Repository().getQuestions(questionArrayList -> {
                     binding.questionTextview.setText(questionArrayList.get(currentQuestionIndex).getAnswer());
                     updateCounter(questionArrayList);
@@ -52,10 +62,7 @@ public class MainActivity extends AppCompatActivity {
         );
 
         binding.buttonNext.setOnClickListener(view -> {
-            currentQuestionIndex = (currentQuestionIndex + 1) % questionList.size();
-            updateQuestion();
-            prefs.saveHighestScore(scoreCounter);
-            Log.d("Prefs", "onCreate: "+prefs.getHighestScore());
+            getNextQuestion();
 
         });
         binding.buttonTrue.setOnClickListener(view -> {
@@ -68,6 +75,11 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    private void getNextQuestion() {
+        currentQuestionIndex = (currentQuestionIndex + 1) % questionList.size();
+        updateQuestion();
     }
 
     private void checkAnswer(boolean userChoseCorrect) {
@@ -104,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onAnimationEnd(Animation animation) {
                 binding.questionTextview.setTextColor(Color.WHITE);
+                getNextQuestion();
             }
 
             @Override
@@ -133,6 +146,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onAnimationEnd(Animation animation) {
                 binding.questionTextview.setTextColor(Color.WHITE);
+                getNextQuestion();
             }
 
             @Override
@@ -147,12 +161,26 @@ public class MainActivity extends AppCompatActivity {
             scoreCounter -= 100;
             score.setScore(scoreCounter);
             binding.scoreText.setText("Current Score: "+String.valueOf(score.getScore()));
+        } else{
+            scoreCounter = 0;
+            score.setScore(scoreCounter);
         }
 
     }
     private void addPoints() {
         scoreCounter += 100;
         score.setScore(scoreCounter);
+        binding.scoreText.setText(String.valueOf(score.getScore()));
         binding.scoreText.setText("Current Score: "+String.valueOf(score.getScore()));
+
+    }
+
+    @Override
+    protected void onPause() {
+        prefs.saveHighestScore(score.getScore());
+        prefs.setState(currentQuestionIndex);
+        Log.d("Pause", "onPause: saving score "+ prefs.getHighestScore());
+
+        super.onPause();
     }
 }
