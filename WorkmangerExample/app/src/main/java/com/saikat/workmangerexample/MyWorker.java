@@ -27,16 +27,18 @@ public class MyWorker extends Worker {
     }
 
     private void displayNotification(String task, String desc) {
-        NotificationManager manager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationManager notificationManager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel("saikat", "workManager", NotificationManager.IMPORTANCE_DEFAULT);
-            manager.createNotificationChannel(channel);
+            channel.setDescription(desc);
+            notificationManager.createNotificationChannel(channel);
         }
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), "example")
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), "saikat")
                 .setContentTitle(task)
                 .setContentText(desc)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setSmallIcon(R.mipmap.ic_launcher);
 
-        manager.notify(1, builder.build());
+        notificationManager.notify(1, builder.build());
     }
 }
