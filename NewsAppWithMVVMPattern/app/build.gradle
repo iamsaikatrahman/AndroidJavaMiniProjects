@@ -3,12 +3,12 @@ plugins {
 }
 
 android {
-    compileSdk 32
+    compileSdk 31
 
     defaultConfig {
         applicationId "com.saikat.newsappwithmvvmpattern"
         minSdk 21
-        targetSdk 32
+        targetSdk 31
         versionCode 1
         versionName "1.0"
 
@@ -53,6 +53,4 @@ dependencies {
     //Round Image
     implementation 'com.makeramen:roundedimageview:2.3.0'
 
-    //Android Progress Bar
-    implementation 'com.github.ybq:Android-SpinKit:1.4.0'
 }
