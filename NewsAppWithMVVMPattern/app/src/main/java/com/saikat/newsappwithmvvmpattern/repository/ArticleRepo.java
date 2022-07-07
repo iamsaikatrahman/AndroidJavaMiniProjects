@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.saikat.newsappwithmvvmpattern.api.ApiRequestInterface;
 import com.saikat.newsappwithmvvmpattern.api.RetrofitClient;
 import com.saikat.newsappwithmvvmpattern.response.MainResponse;
+import com.saikat.newsappwithmvvmpattern.response.TopMainArticleResponse;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -30,6 +31,24 @@ public class ArticleRepo {
 
             @Override
             public void onFailure(Call<MainResponse> call, Throwable t) {
+                data.setValue(null);
+            }
+        });
+        return data;
+    }
+
+    public LiveData<TopMainArticleResponse> getToArticle() {
+        final MutableLiveData<TopMainArticleResponse> data = new MutableLiveData<>();
+        apiRequestInterface.getTopArticle().enqueue(new Callback<TopMainArticleResponse>() {
+            @Override
+            public void onResponse(Call<TopMainArticleResponse> call, Response<TopMainArticleResponse> response) {
+                if (response.body() != null) {
+                    data.setValue(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<TopMainArticleResponse> call, Throwable t) {
                 data.setValue(null);
             }
         });
