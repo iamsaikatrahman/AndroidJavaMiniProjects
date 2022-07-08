@@ -4,9 +4,10 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.saikat.newsappwithmvvmpattern.models.Article;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class MainResponse {
+public class MainResponse implements Serializable {
     @SerializedName("status")
     @Expose
     private String status;
