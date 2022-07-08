@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/android projects/AndroidJavaMiniProjects/NewsAppWithMVVMPattern/app/src/main/res/layout/activity_detailed.xml" value="0.22" />
         <entry key="..\:/android projects/AndroidJavaMiniProjects/NewsAppWithMVVMPattern/app/src/main/res/layout/activity_main.xml" value="0.20416666666666666" />
         <entry key="..\:/android projects/AndroidJavaMiniProjects/NewsAppWithMVVMPattern/app/src/main/res/layout/custome_toolbar.xml" value="0.20416666666666666" />
         <entry key="..\:/android projects/AndroidJavaMiniProjects/NewsAppWithMVVMPattern/app/src/main/res/layout/latest_news_item.xml" value="0.20416666666666666" />
