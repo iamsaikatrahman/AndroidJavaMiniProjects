@@ -116,7 +116,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:text="Register"
-        android:onClick="registerbtn"
+        android:onClick="register"
         android:textAlignment="center"
         android:textColor="@color/purple_700"
         android:textSize="18sp"
