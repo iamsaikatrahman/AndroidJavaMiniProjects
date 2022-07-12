@@ -14,8 +14,7 @@
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
         android:src="@drawable/bg2"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="-16dp" />
+     />
 
     <TextView
         android:id="@+id/textView2"
@@ -53,6 +52,7 @@
         android:text="Register"
         android:textStyle="bold"
         android:textAllCaps="false"
+        android:onClick="register"
         android:background="@drawable/btn_bg"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
