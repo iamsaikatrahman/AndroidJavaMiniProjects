@@ -1,5 +1,6 @@
 package com.saikat.contactroom.model;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -15,11 +16,7 @@ public class Contact {
     private String occupation;
 
 
-    public Contact() {
-    }
-
-    public Contact(int id, String name, String occupation) {
-        this.id = id;
+    public Contact(@NonNull String name, String occupation) {
         this.name = name;
         this.occupation = occupation;
     }
