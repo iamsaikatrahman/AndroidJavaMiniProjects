@@ -24,6 +24,7 @@ import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements RecylerViewAdapter.OnContactClickListener {
     public static final int NEW_CONTACT_ACTIVITY_REQUEST_CODE = 1;
+    public static final String CONTACT_ID = "contact_id";
     private ContactViewModel contactViewModel;
     private RecyclerView recyclerView;
     private RecylerViewAdapter recylerViewAdapter;
@@ -77,5 +78,9 @@ public class MainActivity extends AppCompatActivity implements RecylerViewAdapte
         Contact contact = Objects.requireNonNull(contactViewModel.allContacts.getValue()).get(position);
         Log.d("ONCONTACTCLICK", "onContactClick: " + contact.getName());
         //startActivity(new Intent(MainActivity.this, NewContact.class));
+
+        Intent intent = new Intent(MainActivity.this, NewContact.class);
+        intent.putExtra(CONTACT_ID, contact.getId());
+        startActivity(intent);
     }
 }
