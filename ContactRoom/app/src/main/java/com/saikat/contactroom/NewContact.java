@@ -1,7 +1,6 @@
 package com.saikat.contactroom;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
@@ -10,7 +9,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.saikat.contactroom.model.Contact;
@@ -44,10 +42,10 @@ public class NewContact extends AppCompatActivity {
                 .create(ContactViewModel.class);
 
 
-        if(getIntent().hasExtra(MainActivity.CONTACT_ID)){
+        if (getIntent().hasExtra(MainActivity.CONTACT_ID)) {
             contactId = getIntent().getIntExtra(MainActivity.CONTACT_ID, 0);
             contactViewModel.get(contactId).observe(this, contact -> {
-                if(contact != null){
+                if (contact != null) {
                     enterName.setText(contact.getName());
                     enterOccupation.setText(contact.getOccupation());
                 }
@@ -74,30 +72,35 @@ public class NewContact extends AppCompatActivity {
         });
 
 
+        //delete button
+        deleteButton.setOnClickListener(view -> editForUpdateOrDelete(true));
+        //update button
+        updateButton.setOnClickListener(view -> editForUpdateOrDelete(false));
 
-        updateButton.setOnClickListener(view -> {
-            int id = contactId;
-            String name = enterName.getText().toString().trim();
-            String occupation = enterOccupation.getText().toString().trim();
-
-            if(TextUtils.isEmpty(name) || TextUtils.isEmpty(occupation)){
-                Snackbar.make(enterName, R.string.empty, Snackbar.LENGTH_SHORT).show();
-            } else{
-                Contact contact = new Contact();
-                contact.setId(id);
-                contact.setName(name);
-                contact.setOccupation(occupation);
-                ContactViewModel.updateContact(contact);
-                finish();
-            }
-
-        });
-
-        if(isEdit){
+        if (isEdit) {
             saveInfoButton.setVisibility(View.GONE);
-        } else{
+        } else {
             updateButton.setVisibility(View.GONE);
             deleteButton.setVisibility(View.GONE);
+        }
+    }
+
+    private void editForUpdateOrDelete(Boolean isDelete) {
+        String name = enterName.getText().toString().trim();
+        String occupation = enterOccupation.getText().toString().trim();
+        if (TextUtils.isEmpty(name) || TextUtils.isEmpty(occupation)) {
+            Snackbar.make(enterName, R.string.empty, Snackbar.LENGTH_SHORT).show();
+        } else {
+            Contact contact = new Contact();
+            contact.setId(contactId);
+            contact.setName(name);
+            contact.setOccupation(occupation);
+            if (isDelete) {
+                ContactViewModel.deleteContact(contact);
+            } else {
+                ContactViewModel.updateContact(contact);
+            }
+            finish();
         }
     }
 }
