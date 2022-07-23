@@ -33,11 +33,11 @@ public class ContactViewModel extends AndroidViewModel {
         return repository.get(id);
     }
 
-    public static void update(Contact contact) {
+    public static void updateContact(Contact contact) {
         repository.update(contact);
     }
 
-    public static void delete(Contact contact) {
+    public static void deleteContact(Contact contact) {
         repository.delete(contact);
     }
 }
