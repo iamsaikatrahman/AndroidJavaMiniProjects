@@ -5,7 +5,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -13,7 +12,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.saikat.todoister.model.Priority;
+import com.saikat.todoister.model.Task;
 import com.saikat.todoister.model.TaskViewModel;
+
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
     private TaskViewModel taskViewModel;
@@ -26,9 +29,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
+//        Toolbar toolbar = findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
+        taskViewModel = new ViewModelProvider.AndroidViewModelFactory(MainActivity.this.getApplication()).create(TaskViewModel.class);
         bottomSheetFragment = new BottomSheetFragment();
         ConstraintLayout constraintLayout = findViewById(R.id.bottomSheet);
         BottomSheetBehavior<ConstraintLayout> bottomSheetBehavior = BottomSheetBehavior.from(constraintLayout);
@@ -43,7 +47,14 @@ public class MainActivity extends AppCompatActivity {
 
 
         FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(view -> showBottomSheetDialog());
+        fab.setOnClickListener(view -> {
+            Task task = new Task("Todo",
+                    Priority.HIGH,
+                    Calendar.getInstance().getTime(),
+                    Calendar.getInstance().getTime(),
+                    false);
+            TaskViewModel.insert(task);
+        });
 
 
     }

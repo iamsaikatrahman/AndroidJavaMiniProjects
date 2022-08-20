@@ -16,12 +16,13 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @Database(entities = {Task.class}, version = 1, exportSchema = false)
-//@TypeConverters({Converter.class})
+@TypeConverters({Converter.class})
 public abstract class TaskRoomDatabase extends RoomDatabase {
     public static final int NUMBER_OF_THREADS = 4;
     public static final String DATBASE_NAME = "todoister_database";
     private static volatile TaskRoomDatabase INSTANCE;
-    public static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
+    public static final ExecutorService databaseWriteExecutor
+            = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
 
     public static final RoomDatabase.Callback sRoomDatabaseCallback = new RoomDatabase.Callback() {
